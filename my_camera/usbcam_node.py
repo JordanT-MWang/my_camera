@@ -12,14 +12,15 @@ class CameraNode(Node):
         self.timer = self.create_timer(0.001, self.timer_callback)  # Create a timer to call timer_callback every 0.033 seconds (30 FPS)
         self.cap = cv2.VideoCapture(cam)  # Open the specified webcam
         self.cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)  # Set the buffer size to 1 to minimize latency
-        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)  # Set the frame width to 640 pixels
-        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)  # Set the frame height to 480 pixels
-        self.cap.set(cv2.CAP_PROP_FPS, 60)  # Set the frames per second to 60
+        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 400)  # Set the frame width to 640 pixels
+        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)  # Set the frame height to 480 pixels
+        self.cap.set(cv2.CAP_PROP_FPS, 10)  # Set the frames per second to 60
         self.bridge = CvBridge()  # Initialize the CvBridge to convert between ROS and OpenCV images
 
     def timer_callback(self):
         ret, frame = self.cap.read()  # Capture a frame from the webcam
         if ret:  # Check if the frame was captured successfully
+        
             msg = self.bridge.cv2_to_imgmsg(frame, encoding="bgr8")  # Convert the OpenCV image to a ROS Image message
             self.publisher_.publish(msg)  # Publish the Image message
             # cv2.imshow('Webcam', frame)  # Display the frame in an OpenCV window
